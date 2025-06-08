@@ -1,0 +1,20 @@
+
+.navbar-custom {
+    
+    background-color: lightcoral;
+    font-family: Arial;
+    font-weight: bold;
+    color:black;
+}
+
+.navbar-subitem {
+
+        font-family: Arial;
+    font-weight: bold;
+}
+
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+

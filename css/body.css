@@ -1,0 +1,31 @@
+body {
+    background-color: mistyrose;
+    font-family: "Century Gothic";
+}
+html, body {
+    height: 100%;
+}
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-text {
+  animation: slideFadeIn 2s ease-out both;
+}
+
+.carousel-inner {
+  height: 500px; /* feste Höhe für den ganzen Carousel-Bereich */
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: cover; /* Bild wird beschnitten, aber bleibt gleich groß */
+}
