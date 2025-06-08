@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="/css/body.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <div class="dropdown">
+        <button class="dropbtn">Martinique
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="martinique-lage.html">Lage</a>
+            <a href="martinique-bilder.html">Bilder</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Mallorca
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="mallorca-lage.html">Lage</a>
+            <a href="mallorca-bilder.html">Bilder</a>
+        </div>
+    </div>
+    <a href="impressum.html">Impressum</a>
+</div>
+
+<div align="center">
+    <h1>Urlaubsfotos von Luisa</h1>
+</div>
+
+
+<div align="center" class="images">
+    <img src="/images/WhatsApp%20Image%202022-05-19%20at%2018.19.01.jpeg" width="700px" height="600px">
+</div>
+
+<div align="center">
+    <p>
+        Das ist die Seite von Luisa. <br>
+        Hier finden Sie ein paar Urlaubsfotos von mir.
+    </p>
+</div>
+
+<div align="center" class="formular">
+    <form>
+        <h2>Wer hat meine Webseite besucht?</h2>
+    <input value="Vorname" id="prename">
+    <input value="Nachname" id="name">
+    <label>
+        <select id="gender">
+            <option>männlich</option>
+            <option>weiblich</option>
+            <option>diverse</option>
+        </select>
+    </label>
+        <br>
+        Bist du das erste mal auf meiner Webseite?
+    <input type="checkbox" >Ja
+    <input type="checkbox" >Nein
+        <br>
+        <textarea>Willst du mir noch etwas mitteilen</textarea>
+        <br>
+
+
+    <input type="submit" onclick="myFunction()" id="vorname">
+        <script>
+            function myFunction() {
+            alert("Hallo, schön das du auf meiner Webseite bist!")
+            }
+        </script>
+
+    <input type="reset">
+
+    </form>
+
+</div>
+
+<footer>
+    <div align="center">
+    <a href="impressum.html">Impressum</a>
+    </div>
+</footer>
+
+
+</body>
+</html>
