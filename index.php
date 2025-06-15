@@ -21,7 +21,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
-            <img src="/images/home1.png" class="img-fluid rounded shadow" alt="Urlaubsbild von Luisa">
+            <img src="/images/home1.jpg" class="img-fluid rounded shadow" alt="Urlaubsbild von Luisa">
         </div>
     </div>
 
