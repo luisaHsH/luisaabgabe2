@@ -10,7 +10,7 @@ CREATE TABLE kommentare (
     name TEXT NOT NULL,
     kommentar TEXT NOT NULL,
     reise_id TEXT NOT NULL, -- muss TEXT sein wie reisen.seite
-    zeitpunkt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    zeitpunkt DATETIME  DEFAULT (DATETIME('now', 'localtime')),
     FOREIGN KEY (reise_id) REFERENCES reisen(seite)
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE antworten (
     parent_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     kommentar TEXT NOT NULL,
-    zeitpunkt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    zeitpunkt DATETIME DEFAULT (DATETIME('now', 'localtime')),
     FOREIGN KEY (parent_id) REFERENCES kommentare(id)
 );
 
