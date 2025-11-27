@@ -29,10 +29,18 @@
                 <p><strong>E-Mail (optional):</strong><br>
                     <a href="mailto:luisa@example.com">luisa@example.com</a>
                 </p>
+                <p><strong>Projektdateien zum Download</strong><br>
+                    Hier können Sie die ZIP-Datei mit der PDF zum Seitenkonzept,<br>
+                    dem PHP-Quellcode und der SQL-Exportdatei herunterladen.<br>
+                    <a href="downloads/projektmaterial.zip" download>
+                        ZIP-Datei herunterladen
+                    </a>
+                </p>
         </div>
     </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>
 </body>
+
 </html>
