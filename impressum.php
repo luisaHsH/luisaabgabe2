@@ -32,7 +32,7 @@
                 <p><strong>Projektdateien zum Download</strong><br>
                     Hier können Sie die ZIP-Datei mit der PDF zum Seitenkonzept,<br>
                     dem PHP-Quellcode und der SQL-Exportdatei herunterladen.<br>
-                    <a href="downloads/projektmaterial.zip" download>
+                    <a href="projektmaterialien.zip" download>ZIP-Datei herunterladen</a>
                         ZIP-Datei herunterladen
                     </a>
                 </p>
@@ -44,3 +44,4 @@
 </body>
 
 </html>
+
