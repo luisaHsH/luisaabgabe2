@@ -1,5 +1,7 @@
 -- Datei: init.sql (kannst du in SQLite importieren)
 
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE reisen (
     seite TEXT PRIMARY KEY,         -- z. B. 'mallorca.php'
     beschreibung TEXT
@@ -34,4 +36,5 @@ VALUES ('martinique.php','Inselerlebnis in der Karibik');
 
 -- dritter Eintrag: Martinique (Beispiel)
 INSERT INTO reisen (seite, beschreibung)
+
 VALUES ('Frankreich.php','schöne Paris');
