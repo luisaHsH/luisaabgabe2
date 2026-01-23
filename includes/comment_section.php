@@ -8,7 +8,7 @@
 
             <!-- Formular sendet an 'kommentar_absenden.php' -->
             <form method="post" action="handle_comment.php">
-                <input type="hidden" name="seite" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+                <input type="hidden" name="seite" value="<?= htmlspecialchars(basename($_SERVER['PHP_SELF'])) ?>">
                 <input type="hidden" name="parent_id" value="">
                 <div class="mb-3">
                     <label for="name" class="form-label">Dein Name</label>
@@ -24,3 +24,4 @@
     </div>
 
 </div>
+
