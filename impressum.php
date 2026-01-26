@@ -26,8 +26,8 @@
                     Expo Plaza 12<br>
                     30539 Hannover
                 </p>
-                <p><strong>E-Mail (optional):</strong><br>
-                    <a href="mailto:luisa@example.com">luisa@example.com</a>
+                <p><strong>E-Mail:</strong><br>
+                    <a href="mailto:luisa-charlotte.rabbe@stud.hs-hannover.de">luisa-charlotte.rabbe@stud.hs-hannover.de</a>
                 </p>
                 <p><strong>Projektdateien zum Download</strong><br>
                     Hier können Sie die ZIP-Datei mit der PDF zum Seitenkonzept,<br>
@@ -44,4 +44,5 @@
 </body>
 
 </html>
+
 
