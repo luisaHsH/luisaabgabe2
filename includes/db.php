@@ -1,20 +1,24 @@
 <?php
 declare(strict_types=1);
 
-function db(): PDO {
-  static $pdo = null;
-  if ($pdo) return $pdo;
+const DB_HOST = 'localhost';
+const DB_NAME = 'DEINE_DATENBANK';
+const DB_USER = 'DEIN_USER';
+const DB_PASS = 'DEIN_PASS';
 
-  $host = 'localhost';
-  $dbname = 'reiseapp';
-  $user = 'DEIN_USER';
-  $pass = 'DEIN_PASS';
+function get_pdo(): PDO {
+    static $pdo = null;
 
-  $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-  $pdo = new PDO($dsn, $user, $pass, [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-  ]);
+    if ($pdo instanceof PDO) {
+        return $pdo;
+    }
 
-  return $pdo;
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+
+    $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+
+    return $pdo;
 }
