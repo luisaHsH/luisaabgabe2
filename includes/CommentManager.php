@@ -4,77 +4,83 @@ declare(strict_types=1);
 require_once __DIR__ . '/db.php';
 
 class CommentManager {
-  private PDO $pdo;
 
-  public function __construct() {
-    $this->pdo = db();
-  }
+    private PDO $pdo;
 
-  public function ensureReiseExists(string $seite): void {
-    $stmt = $this->pdo->prepare("INSERT IGNORE INTO reisen (seite) VALUES (:seite)");
-    $stmt->execute([':seite' => $seite]);
-  }
-
-  public function addComment(string $seite, string $name, string $kommentar): void {
-    $this->ensureReiseExists($seite);
-
-    $stmt = $this->pdo->prepare("
-      INSERT INTO kommentare (name, kommentar, reise_id)
-      VALUES (:name, :kommentar, :reise_id)
-    ");
-    $stmt->execute([
-      ':name' => $name,
-      ':kommentar' => $kommentar,
-      ':reise_id' => $seite
-    ]);
-  }
-
-  public function addReply(int $kommentarId, string $name, string $antwort): void {
-    $stmt = $this->pdo->prepare("
-      INSERT INTO antworten (kommentar_id, name, antwort)
-      VALUES (:kommentar_id, :name, :antwort)
-    ");
-    $stmt->execute([
-      ':kommentar_id' => $kommentarId,
-      ':name' => $name,
-      ':antwort' => $antwort
-    ]);
-  }
-
-  public function getCommentsWithReplies(string $seite): array {
-    $stmt = $this->pdo->prepare("
-      SELECT id, name, kommentar, zeitpunkt
-      FROM kommentare
-      WHERE reise_id = :reise_id
-      ORDER BY zeitpunkt DESC
-    ");
-    $stmt->execute([':reise_id' => $seite]);
-    $comments = $stmt->fetchAll();
-
-    if (!$comments) return [];
-
-    $ids = array_column($comments, 'id');
-    $placeholders = implode(',', array_fill(0, count($ids), '?'));
-
-    $stmt2 = $this->pdo->prepare("
-      SELECT id, kommentar_id, name, antwort, zeitpunkt
-      FROM antworten
-      WHERE kommentar_id IN ($placeholders)
-      ORDER BY zeitpunkt ASC
-    ");
-    $stmt2->execute($ids);
-    $replies = $stmt2->fetchAll();
-
-    $replyMap = [];
-    foreach ($replies as $r) {
-      $replyMap[(int)$r['kommentar_id']][] = $r;
+    public function __construct() {
+        $this->pdo = get_pdo();
     }
 
-    foreach ($comments as &$c) {
-      $c['replies'] = $replyMap[(int)$c['id']] ?? [];
-    }
-    unset($c);
+    private function ensureReise(string $seite): int {
+        $this->pdo->prepare(
+            "INSERT IGNORE INTO reisen (seite) VALUES (:seite)"
+        )->execute(['seite' => $seite]);
 
-    return $comments;
-  }
+        $stmt = $this->pdo->prepare(
+            "SELECT id FROM reisen WHERE seite = :seite"
+        );
+        $stmt->execute(['seite' => $seite]);
+
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function addComment(string $seite, string $name, string $kommentar): void {
+        $reiseId = $this->ensureReise($seite);
+
+        $this->pdo->prepare(
+            "INSERT INTO kommentare (reise_id, name, kommentar)
+             VALUES (:reise_id, :name, :kommentar)"
+        )->execute([
+            'reise_id' => $reiseId,
+            'name' => $name,
+            'kommentar' => $kommentar
+        ]);
+    }
+
+    public function addReply(int $commentId, string $name, string $antwort): void {
+        $this->pdo->prepare(
+            "INSERT INTO antworten (kommentar_id, name, antwort)
+             VALUES (:comment_id, :name, :antwort)"
+        )->execute([
+            'comment_id' => $commentId,
+            'name' => $name,
+            'antwort' => $antwort
+        ]);
+    }
+
+    public function getComments(string $seite): array {
+        $reiseId = $this->ensureReise($seite);
+
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM kommentare
+             WHERE reise_id = :reise_id
+             ORDER BY zeitpunkt DESC"
+        );
+        $stmt->execute(['reise_id' => $reiseId]);
+        $comments = $stmt->fetchAll();
+
+        foreach ($comments as &$c) {
+            $stmt = $this->pdo->prepare(
+                "SELECT * FROM antworten
+                 WHERE kommentar_id = :id
+                 ORDER BY zeitpunkt ASC"
+            );
+            $stmt->execute(['id' => $c['id']]);
+            $c['antworten'] = $stmt->fetchAll();
+        }
+
+        return $comments;
+    }
+
+    public function deleteComment(int $id): void {
+        $this->pdo->prepare(
+            "DELETE FROM kommentare WHERE id = :id"
+        )->execute(['id' => $id]);
+    }
+
+    public function deleteReply(int $id): void {
+        $this->pdo->prepare(
+            "DELETE FROM antworten WHERE id = :id"
+        )->execute(['id' => $id]);
+    }
 }
