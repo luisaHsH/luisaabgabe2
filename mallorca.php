@@ -68,9 +68,10 @@
 
     </div>
 
-    <?php include 'includes/comment_section.php'; ?>
+    <?php include __DIR__ . '/includes/comment_section.php'; ?>
     <?php include 'includes/comments_display.php'; ?>
     <?php include 'includes/footer.php'; ?>
 </body>
+
 
 </html>
