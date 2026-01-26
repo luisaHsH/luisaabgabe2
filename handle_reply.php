@@ -1,23 +1,28 @@
 <?php
-require_once 'includes/CommentManager.php';
+declare(strict_types=1);
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["absenden"])) {
-    if (!empty($_POST["name"]) && !empty($_POST["kommentar"]) && !empty($_POST["parent_id"])) {
-        $name = trim($_POST["name"]);
-        $kommentar = trim($_POST["kommentar"]);
-        $parent_id = (int)$_POST["parent_id"];
-        $seite = trim($_POST["seite"]);
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
-        $commentManager = new CommentManager();
-        $commentManager->saveReply($name, $kommentar, $parent_id);
+require_once __DIR__ . '/includes/CommentManager.php';
+$cm = new CommentManager();
 
-        // Zurück zur ursprünglichen Seite
-        header("Location: " . $seite);
-        exit;
-    } else {
-        die("❌ Fehler: Alle Felder müssen ausgefüllt sein.");
-    }
-} else {
-    die("❌ Ungültiger Zugriff.");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  header('Location: index.php');
+  exit;
 }
-?>
+
+$seite = basename((string)($_POST['seite'] ?? 'index.php'));
+$kommentarId = (int)($_POST['kommentar_id'] ?? 0);
+$name = trim((string)($_POST['name'] ?? ''));
+$antwort = trim((string)($_POST['antwort'] ?? ''));
+
+if ($kommentarId <= 0 || $name === '' || $antwort === '') {
+  header('Location: ' . $seite . '?err=1#comments');
+  exit;
+}
+
+$cm->addReply($kommentarId, $name, $antwort);
+
+header('Location: ' . $seite . '#comments');
+exit;
